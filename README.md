@@ -17,7 +17,7 @@ git clone https://github.com/zhthinkjoy/ZHThinkjoyGesture_Android_SDK.git
 ![](https://github.com/zhthinkjoy/git_resource/raw/master/ZHThinkjoyGesture_Android_SDK/add_gesture_library.png)
 
 ## 添加jar库为library
-如果点击jar包，可以看见包里面的内容，可以直接编译运行。否则，右键点击ZHTJface_v1.0.jar，选择add as library
+点击jar包，如果可以看见包里面的内容，则可以直接编译运行。若不能查看，右键点击ZHTJface_v1.0.jar，选择`add as library`。
 
 ## api的使用
-手势识别具体api使用使用请看[说明文档](http://github.com/zhthinkjoy/ZHThinkjoyGesture_Android_SDK/wiki)
+手势识别具体api使用使用请看[说明文档](https://dev.zhthinkjoy.com/APIFile/handOffApi/Android)
