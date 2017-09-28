@@ -9,6 +9,5 @@
 .externalNativeBuild
 /app/libs/*
 .idea/vcs.xml
-README.md
 app/libs/
 app/src/main/res/drawable/
