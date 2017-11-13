@@ -52,7 +52,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try{
-            camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+            camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
             List<Camera.Size> sizeList = camera.getParameters().getSupportedPictureSizes();
             int selectNum = -1;
             int i = 0;
@@ -95,7 +95,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             camera.setParameters(params);
             holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
             camera.setPreviewDisplay(holder);
-            camera.setDisplayOrientation(90);
+//            camera.setDisplayOrientation(90);
+//            camera.setDisplayOrientation(180);
             camera.setPreviewCallback(this);
             camera.startPreview() ;
         }catch(Exception e){
@@ -123,26 +124,35 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void onPreviewFrame(byte[] data, Camera camera) {
         if (handler != null ) {
             Camera.Size previewSize = camera.getParameters().getPreviewSize();
-            BitmapFactory.Options newOpts = new BitmapFactory.Options();
-            newOpts.inJustDecodeBounds = true;
-            YuvImage yuvimage = new YuvImage(
-                    data,
-                    ImageFormat.NV21,
-                    previewSize.width,
-                    previewSize.height,
-                    null);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            yuvimage.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 100, baos);// 80--JPG图片的质量[0-100],100最高
-            byte[] rawImage = baos.toByteArray();
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmapRaw = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length, options);
-            Bitmap bitmap = PhotoUtils.resizeBitmapAndRotate90(bitmapRaw, GlobalInfo.IMAGE_WIDTH, GlobalInfo.IMAGE_HEIGHT);
-            if (bitmap != null && globalFlag.isGestureDetectFinished == true) {
+//            BitmapFactory.Options newOpts = new BitmapFactory.Options();
+//            newOpts.inJustDecodeBounds = true;
+//            YuvImage yuvimage = new YuvImage(
+//                    data,
+//                    ImageFormat.NV21,
+//                    previewSize.width,
+//                    previewSize.height,
+//                    null);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            yuvimage.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 100, baos);// 80--JPG图片的质量[0-100],100最高
+//            byte[] rawImage = baos.toByteArray();
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//            Bitmap bitmapRaw = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length, options);
+//            Bitmap bitmap = PhotoUtils.resizeBitmapAndRotate90(bitmapRaw, GlobalInfo.IMAGE_WIDTH, GlobalInfo.IMAGE_HEIGHT);
+//            if (bitmap != null && globalFlag.isGestureDetectFinished == true) {
+//                Message msg = new Message();
+//                msg.what = GlobalInfo.MSG_GESTURE_DETECT;
+//                globalFlag.currentDetectBitmap = bitmap;
+//                handler.sendMessage(msg);
+//                globalFlag.isGestureDetectFinished = false;
+//            }
+            if (data != null && globalFlag.isGestureDetectFinished == true) {
                 Message msg = new Message();
                 msg.what = GlobalInfo.MSG_GESTURE_DETECT;
-                globalFlag.currentDetectBitmap = bitmap;
+                msg.arg1 = previewSize.width;
+                msg.arg2 = previewSize.height;
                 handler.sendMessage(msg);
+                globalFlag.currentImage = data;
                 globalFlag.isGestureDetectFinished = false;
             }
         }

@@ -47,15 +47,15 @@ public class StartActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERSSION) {
-            if (allRequestsPermitted(grantResults)) {
-                Toast.makeText(this, " Permission Granted!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(StartActivity.this, MainActivity.class));
-            }
-            else {
-                Toast.makeText(this, " Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
+//        if (requestCode == REQUEST_PERSSION) {
+//            if (allRequestsPermitted(grantResults)) {
+//                Toast.makeText(this, " Permission Granted!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(StartActivity.this, MainActivity.class));
+//            }
+//            else {
+//                Toast.makeText(this, " Permission Denied!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
     private boolean allRequestsPermitted(int[] grantResults) {
         for (int result : grantResults)

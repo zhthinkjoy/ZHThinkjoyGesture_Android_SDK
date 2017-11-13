@@ -10,6 +10,7 @@ public class GlobalFlag {
     public boolean isFaceDetectFinished;
     public boolean isGestureDetectFinished;
     public Bitmap currentDetectBitmap;
+    public byte [] currentImage;
     private static GlobalFlag globalFlag;
     private GlobalFlag() {
         isFaceDetectFinished = true;

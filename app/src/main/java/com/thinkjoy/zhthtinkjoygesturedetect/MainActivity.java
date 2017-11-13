@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.thinkjoy.zhthinkjoygesturedetectlib.GestureConfig;
 import com.thinkjoy.zhthinkjoygesturedetectlib.GestureInfo;
 import com.thinkjoy.zhthinkjoygesturedetectlib.ZHThinkjoyGesture;
 
@@ -17,6 +18,9 @@ public class MainActivity extends Activity {
     private Handler handler;
     private GlobalFlag globalFlag;
     private ZHThinkjoyGesture zhThinkjoyGesture;
+//    static {
+//        System.loadLibrary("gesture");
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,7 @@ public class MainActivity extends Activity {
 
         zhThinkjoyGesture = ZHThinkjoyGesture.getInstance(this);
         zhThinkjoyGesture.init();
+//        zhThinkjoyGesture.openCamera();
         globalFlag = GlobalFlag.getInstance();
 
         final CameraPreview cameraPreview = (CameraPreview)findViewById(R.id.cv_camera_preview);
@@ -37,10 +42,17 @@ public class MainActivity extends Activity {
                         Log.i("sendmessage", Long.toString(System.currentTimeMillis()));
                         List<GestureInfo> gestureInfoList = new ArrayList<>();
                         long time1 = System.currentTimeMillis();
-                        Bitmap bitmap = globalFlag.currentDetectBitmap;
-                        zhThinkjoyGesture.gestureDetect(bitmap, gestureInfoList);
+//                        Bitmap bitmap = globalFlag.currentDetectBitmap;
+//                        zhThinkjoyGesture.gestureDetect(bitmap, gestureInfoList);
+                        byte[] imageArray = globalFlag.currentImage;
+                        GestureConfig gestureConfig = zhThinkjoyGesture.getConfig();
+//                        gestureConfig.Rotation = 270;
+//                        gestureConfig.Rotation = 180;
+                        zhThinkjoyGesture.setConfig(gestureConfig);
+                        zhThinkjoyGesture.gestureDetect(imageArray, 1, msg.arg1, msg.arg2, gestureInfoList);
                         long time2 = System.currentTimeMillis();
-                            GestureDetectResult gestureDetectResult = new GestureDetectResult();
+                        fv_draw_rect.setImageSize(msg.arg1, msg.arg2);
+                        GestureDetectResult gestureDetectResult = new GestureDetectResult();
                         if (gestureInfoList.size() > 0) {
                             gestureDetectResult.shape = gestureInfoList.get(0).type;
                             gestureDetectResult.left = gestureInfoList.get(0).gestureRectangle[0].x;

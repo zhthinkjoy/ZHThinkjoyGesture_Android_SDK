@@ -62,8 +62,7 @@ public class FaceOverlayView extends View {
         mFacePaint.setStrokeWidth(5);
         mFacePaint.setStyle(Paint.Style.STROKE);
 
-        imageHeight = GlobalInfo.IMAGE_HEIGHT;
-        imageWidth = GlobalInfo.IMAGE_WIDTH;
+
     }
     @Override
     protected void onDraw(Canvas canvas) {
@@ -98,18 +97,28 @@ public class FaceOverlayView extends View {
             float ratex = (float)winWidth / imageWidth;
             float ratey = (float)winHeight / imageHeight;
             if (left > 0.5) {
+
                 canvas.drawRect(left * ratex,  top * ratey, right * ratex,  bottom * ratey, mPaint);
                 canvas.drawText("TYPE: " + shapetype , 20, 100, mTextPaint);
                 canvas.drawText("TIME:"+Long.toString(processTime) + "ms", 20, 160
                         , mTextPaint);
             } else {
+                canvas.drawText("TYPE: " + shapetype , 20, 100, mTextPaint);
+                canvas.drawText("TIME:"+Long.toString(processTime) + "ms", 20, 160, mTextPaint);
                 canvas.drawRect(0, 0, 0, 0, mPaint);
             }
+
     }
 
     public void setGestureResult(GestureDetectResult gestureResult, long processTime) {
-        this.left = imageWidth - gestureResult.right;
-        this.right = imageWidth - gestureResult.left;
+        if (GlobalInfo.IS_IMAGE_REVERSE == false) {
+            this.right = imageWidth - gestureResult.left - 0.5f;
+            this.left = imageWidth - gestureResult.right - 0.5f;
+        } else {
+            this.left = gestureResult.left + 0.5f;
+            this.right = gestureResult.right + 0.5f;
+        }
+
         this.top = (float)(gestureResult.top + 0.5);
         this.bottom = (float)(gestureResult.bottom + 0.5);
         this.shape = gestureResult.shape ;
@@ -118,6 +127,11 @@ public class FaceOverlayView extends View {
     public void setWindowSize() {
         this.winHeight = this.getHeight();
         this.winWidth = this.getWidth();
+    }
+
+    public void setImageSize(int imageWidth, int imageHeight) {
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
     }
 
 }
