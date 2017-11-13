@@ -46,12 +46,12 @@ public class MainActivity extends Activity {
 //                        zhThinkjoyGesture.gestureDetect(bitmap, gestureInfoList);
                         byte[] imageArray = globalFlag.currentImage;
                         GestureConfig gestureConfig = zhThinkjoyGesture.getConfig();
-//                        gestureConfig.Rotation = 270;
+                        gestureConfig.Rotation = GestureConfig.ROTATE_270;
 //                        gestureConfig.Rotation = 180;
                         zhThinkjoyGesture.setConfig(gestureConfig);
                         zhThinkjoyGesture.gestureDetect(imageArray, 1, msg.arg1, msg.arg2, gestureInfoList);
                         long time2 = System.currentTimeMillis();
-                        fv_draw_rect.setImageSize(msg.arg1, msg.arg2);
+                        fv_draw_rect.setImageSize(msg.arg2, msg.arg1);
                         GestureDetectResult gestureDetectResult = new GestureDetectResult();
                         if (gestureInfoList.size() > 0) {
                             gestureDetectResult.shape = gestureInfoList.get(0).type;

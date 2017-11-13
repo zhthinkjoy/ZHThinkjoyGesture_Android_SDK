@@ -5,10 +5,10 @@ package com.thinkjoy.zhthtinkjoygesturedetect;
  */
 
 public class GlobalInfo {
-    public static final int IMAGE_WIDTH = 1920;
-    public static final int IMAGE_HEIGHT = 1080;
-    public static final int CAMERA_SIZE = 1920;
+    public static final int IMAGE_WIDTH = 640;
+    public static final int IMAGE_HEIGHT = 480;
+    public static final int CAMERA_SIZE = 640;
 
     public static final int MSG_GESTURE_DETECT = 1;
-    public static final boolean IS_IMAGE_REVERSE = true;
+    public static final boolean IS_IMAGE_REVERSE = false;
 }
